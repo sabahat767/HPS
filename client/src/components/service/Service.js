@@ -1,313 +1,131 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Form, Field } from 'react-final-form';
-import { TextField, Checkbox, Radio, Select } from 'final-form-material-ui';
+import React, {useState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import {
-  Typography,
-  Paper,
-  Link,
+  TextField,
+  InputLabel,
   Grid,
-  Button,
-  CssBaseline,
-  RadioGroup,
-  FormLabel,
   MenuItem,
-  FormGroup,
+  Select,
   FormControl,
+  Checkbox,
   FormControlLabel,
 } from '@material-ui/core';
-// Picker
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  TimePicker,
-  DatePicker,
-} from '@material-ui/pickers';
 
-function DatePickerWrapper(props) {
-  const {
-    input: { name, onChange, value, ...restInput },
-    meta,
-    ...rest
-  } = props;
-  const showError =
-    ((meta.submitError && !meta.dirtySinceLastSubmit) || meta.error) &&
-    meta.touched;
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
-  return (
-    <DatePicker
-      {...rest}
-      name={name}
-      helperText={showError ? meta.error || meta.submitError : undefined}
-      error={showError}
-      inputProps={restInput}
-      onChange={onChange}
-      value={value === '' ? null : value}
-    />
-  );
-}
-
-function TimePickerWrapper(props) {
-  const {
-    input: { name, onChange, value, ...restInput },
-    meta,
-    ...rest
-  } = props;
-  const showError =
-    ((meta.submitError && !meta.dirtySinceLastSubmit) || meta.error) &&
-    meta.touched;
+export default function Register() {
+  const classes = useStyles();
+  const [Header, setHeader] = useState({
+    TokenNo: "",
+    ServiceDate: new Date(),
+    MRNo: 'recID',
+    Ward: "",
+    Amount: "",
+    TotalAmount: "",
+    PatientContribution: "",
+    Remarks: "",
+    CreatedUser: "Admin",
+    ModifyUser: "Admin"
+});
 
   return (
-    <TimePicker
-      {...rest}
-      name={name}
-      helperText={showError ? meta.error || meta.submitError : undefined}
-      error={showError}
-      inputProps={restInput}
-      onChange={onChange}
-      value={value === '' ? null : value}
-    />
-  );
-}
-
-const onSubmit = async values => {
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-  await sleep(300);
-  window.alert(JSON.stringify(values, 0, 2));
-};
-const validate = values => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = 'Required';
-  }
-  if (!values.lastName) {
-    errors.lastName = 'Required';
-  }
-  if (!values.email) {
-    errors.email = 'Required';
-  }
-  return errors;
-};
-
-export default function Services() {
-  return (
-    <div style={{ padding: 16, margin: 'auto', maxWidth: 600 }}>
-      <CssBaseline />
-      <Typography variant="h4" align="center" component="h1" gutterBottom>
-        🏁 Services
-      </Typography>
-      <Form
-        onSubmit={onSubmit}
-        initialValues={{ employed: true, stooge: 'larry' }}
-        validate={validate}
-        render={({ handleSubmit, reset, submitting, pristine, values }) => (
-          <form onSubmit={handleSubmit} noValidate>
-            <Paper style={{ padding: 16 }}>
-              <Grid container alignItems="flex-start" spacing={2}>
-                <Grid item xs={6}>
-                  <Field
-                    fullWidth
-                    required
-                    name="firstName"
-                    component={TextField}
-                    type="text"
-                    label="First Name"
-                  />
+    <div style={{ padding: 16, margin: 'auto', maxWidth: '80%', justifyContent:'center' }}>
+      
+      <Grid container>
+        <Grid sm={12}>
+          <Grid container spacing={4}>
+            <Grid item lg={7} sm={12}>
+              <Grid container spacing={2}>
+                <Grid item md={4} sm={12} lg={3}>
+                  <TextField value={Header.MRNo} id="MRNo" fullWidth variant="outlined"
+                    type="text" disabled={true}
+                    label="M.R. #"/>
                 </Grid>
-                <Grid item xs={6}>
-                  <Field
-                    fullWidth
-                    required
-                    name="lastName"
-                    component={TextField}
-                    type="text"
-                    label="Last Name"
-                  />
+                <Grid item md={4} sm={12} lg={3}>
+                  <TextField value={Header.TokenNo} id="TokenNo" type="text" fullWidth variant="outlined"
+                    onChange={(e) => setHeader({ ...Header, TokenNo: e.target.value })}
+                    label="Token No"/>
                 </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    name="email"
-                    fullWidth
-                    required
-                    component={TextField}
-                    type="email"
-                    label="Email"
-                  />
+                <Grid item md={4} sm={12} lg={3}>
+                  <TextField id="ServiceDate" label="Service Date" type="date" variant="outlined"
+                    value={Header.ServiceDate} fullWidth
+                    onChange={(e) => setHeader({ ...Header, ServiceDate: e.target.value })}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}/>
                 </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    label="Employed"
-                    control={
-                      <Field
-                        name="employed"
-                        component={Checkbox}
-                        type="checkbox"
-                      />
-                    }
-                  />
-                </Grid>
-                <Grid item>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Best Stooge</FormLabel>
-                    <RadioGroup row>
-                      <FormControlLabel
-                        label="Larry"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="larry"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Moe"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="moe"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Curly"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="curly"
-                          />
-                        }
-                      />
-                    </RadioGroup>
+                <Grid item md={4} sm={12} lg={3}>
+                  <FormControl fullWidth>
+                    <InputLabel  id="demo-simple-select-helper-label">Gender</InputLabel>
+                    <Select 
+                      labelId="demo-simple-select-helper-label"
+                      id="Gender"
+                      value={Header.Gender}
+                      onChange={(e) => setHeader({ ...Header, Gender: e.target.value })}
+                    >
+                      <MenuItem value="male">Male</MenuItem>
+                      <MenuItem value="female">Female</MenuItem>
+                    </Select>
                   </FormControl>
                 </Grid>
-                <Grid item>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Sauces</FormLabel>
-                    <FormGroup row>
-                      <FormControlLabel
-                        label="Ketchup"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="ketchup"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Mustard"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="mustard"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Salsa"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="salsa"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Guacamole 🥑"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="guacamole"
-                          />
-                        }
-                      />
-                    </FormGroup>
+                <Grid item md={4} sm={12} lg={3}>
+                  <FormControl fullWidth>
+                    <InputLabel  id="demo-simple-select-helper-label">Ward</InputLabel>
+                    <Select 
+                      labelId="demo-simple-select-helper-label"
+                      id="Ward"
+                      value={Header.Ward}
+                      onChange={(e) => setHeader({ ...Header, Ward: e.target.value })}
+                    >
+                      <MenuItem value="Ward #1">Ward #1</MenuItem>
+                      <MenuItem value=" Ward #2">Ward #2</MenuItem>
+                      <MenuItem value="Ward #3">Ward #3</MenuItem>
+                    </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    fullWidth
-                    name="notes"
-                    component={TextField}
-                    multiline
-                    label="Notes"
-                  />
+                <Grid item md={4} sm={12} lg={3}>
+                  <TextField value={Header.Amount} id="Amount" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, Amount: e.target.value })}
+                    label="Amount"/>
                 </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    fullWidth
-                    name="city"
-                    component={Select}
-                    label="Select a City"
-                    formControlProps={{ fullWidth: true }}
-                  >
-                    <MenuItem value="London">London</MenuItem>
-                    <MenuItem value="Paris">Paris</MenuItem>
-                    <MenuItem value="Budapest">
-                      A city with a very long Name
-                    </MenuItem>
-                  </Field>
+                <Grid item md={4} sm={12} lg={3}>
+                  <TextField value={Header.TotalAmount} id="TotalAmount" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, TotalAmount: e.target.value })}
+                    label="Total Amount"/>
                 </Grid>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid item xs={6}>
-                    <Field
-                      name="rendez-vous"
-                      component={DatePickerWrapper}
-                      fullWidth
-                      margin="normal"
-                      label="Rendez-vous"
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Field
-                      name="alarm"
-                      component={TimePickerWrapper}
-                      fullWidth
-                      margin="normal"
-                      label="Alarm"
-                    />
-                  </Grid>
-                </MuiPickersUtilsProvider>
-                <Grid item style={{ marginTop: 16 }}>
-                  <Button
-                    type="button"
-                    variant="contained"
-                    onClick={reset}
-                    disabled={submitting || pristine}
-                  >
-                    Reset
-                  </Button>
+                <Grid item md={4} sm={12} lg={3}>
+                  <TextField value={Header.PatientContribution} id="PatientContribution" type="text" fullWidth
+                    onChange={(e) => setHeader({ ...Header, PatientContribution: e.target.value })}
+                    label="Patient Contribution"/>
                 </Grid>
-                <Grid item style={{ marginTop: 16 }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={submitting}
-                  >
-                    Submit
-                  </Button>
+                <Grid item md={8} sm={12} lg={6}>
+                  <TextField value={Header.Remarks} id="Remarks" type="text" fullWidth
+                    onChange={(e) => setHeader({ ...Header, Remarks: e.target.value })}
+                    label="Remarks"/>
                 </Grid>
               </Grid>
-            </Paper>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
-          </form>
-        )}
-      />
+            </Grid>
+            <Grid item lg={1}/>
+            <Grid item lg={4} sm={12}>
+              <Grid container spacing={2}>
+                <Grid item md={6} sm={12} lg={6}>
+                  <TextField value={Header.TokenNo} id="TokenNo" type="text" fullWidth
+                    // onChange={(e) => setHeader({ ...Header, MaleKids: e.target.value })}
+                    label="Token No" disabled={true}/>
+                </Grid>
+              </Grid>
+            </Grid> 
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 }
-

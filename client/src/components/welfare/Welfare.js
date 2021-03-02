@@ -1,313 +1,248 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Form, Field } from 'react-final-form';
-import { TextField, Checkbox, Radio, Select } from 'final-form-material-ui';
+import React, {useState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import {
-  Typography,
-  Paper,
-  Link,
+  TextField,
+  InputLabel,
   Grid,
-  Button,
-  CssBaseline,
-  RadioGroup,
-  FormLabel,
   MenuItem,
-  FormGroup,
+  Select,
   FormControl,
+  Checkbox,
   FormControlLabel,
 } from '@material-ui/core';
-// Picker
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  TimePicker,
-  DatePicker,
-} from '@material-ui/pickers';
 
-function DatePickerWrapper(props) {
-  const {
-    input: { name, onChange, value, ...restInput },
-    meta,
-    ...rest
-  } = props;
-  const showError =
-    ((meta.submitError && !meta.dirtySinceLastSubmit) || meta.error) &&
-    meta.touched;
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+export default function Register() {
+  const classes = useStyles();
+  const [Header, setHeader] = useState({
+    MRNo: 'recID',
+    TokenNo: "",
+    WelfareDate: new Date(),
+    Profession: "",
+    Fiqa: "",
+    Education: '',
+    Cast: "",
+    MonthlyIncome: 0,
+    Guardian: "",
+    OtherInfo: "",
+    MaleKids: "",
+    FemaleKids: "",
+    OtherKids: "",
+    Brothers: "",
+    Sisters: "",
+    NoOFFamilyMembers: "",
+    IsMarried: false,
+    IsAbleToPay: false,
+    IsEarning: false,
+    HaveGold: false,
+    ReqName: '',
+    ReqPhone: "",
+    ReqRelationWithPatient: '',
+    CreateUser: "Admin",
+    ModifyUser: "Admin",
+});
 
   return (
-    <DatePicker
-      {...rest}
-      name={name}
-      helperText={showError ? meta.error || meta.submitError : undefined}
-      error={showError}
-      inputProps={restInput}
-      onChange={onChange}
-      value={value === '' ? null : value}
-    />
-  );
-}
+    <div style={{ padding: 16, margin: 'auto', maxWidth: '80%', justifyContent:'center' }}>
+      <Grid container spacing={2}>
+        <Grid item md={4} sm={12} lg={3}>
+          <TextField value={Header.MRNo} id="MRNo" fullWidth
+            type="text" disabled={true}
+            label="M.R. #"/>
+        </Grid>
+        <Grid item md={4} sm={12} lg={3}>
+          <TextField value={Header.TokenNo} id="TokenNo" type="text" fullWidth
+            onChange={(e) => setHeader({ ...Header, TokenNo: e.target.value })}
+            label="TokenNo"/>
+        </Grid>
+        <Grid item md={4} sm={12} lg={3}>
+          <TextField id="WelfareDate" label="Welfare Date" type="date"
+            value={Header.WelfareDate} fullWidth
+            onChange={(e) => setHeader({ ...Header, WelfareDate: e.target.value })}
+            InputLabelProps={{
+              shrink: true,
+            }}/>
+        </Grid>
+        <Grid item md={4} sm={12} lg={3}>
+          <FormControlLabel color="primary"
+            control={<Checkbox checked={Header.IsRejected} name="Is Rejected" fullWidth
+            onChange={e => setHeader({ ...Header, IsRejected: !Header.IsRejected })} />}
+            label="Zakaat"
+          />
+          <FormControlLabel color="primary"
+            control={<Checkbox checked={Header.IsRejected} name="Is Rejected" fullWidth
+            onChange={e => setHeader({ ...Header, IsRejected: !Header.IsRejected })} />}
+            label="Donation"
+          />
+        </Grid>
+      </Grid>
 
-function TimePickerWrapper(props) {
-  const {
-    input: { name, onChange, value, ...restInput },
-    meta,
-    ...rest
-  } = props;
-  const showError =
-    ((meta.submitError && !meta.dirtySinceLastSubmit) || meta.error) &&
-    meta.touched;
+      <Grid container>
+        <Grid sm={12}>
+          <Grid container spacing={2}>
+            <Grid item md={4} sm={12} lg={3}>
+              <TextField value={Header.Profession} id="Profession" type="text" fullWidth
+                onChange={(e) => setHeader({ ...Header, Profession: e.target.value })}
+                label="Profession"/>
+            </Grid>
+            <Grid item md={4} sm={12} lg={3}>
+              <FormControl fullWidth>
+                <InputLabel  id="demo-simple-select-helper-label">Education</InputLabel>
+                <Select 
+                  labelId="demo-simple-select-helper-label"
+                  id="Education"
+                  value={Header.Education}
+                  onChange={(e) => setHeader({ ...Header, Education: e.target.value })}
+                >
+                  <MenuItem value="matriculation">Matriculation</MenuItem>
+                  <MenuItem value=" intermediate">Intermediate</MenuItem>
+                  <MenuItem value="bachelors">Bachelors</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={4} sm={12} lg={3}>
+              <FormControl fullWidth>
+                <InputLabel  id="demo-simple-select-helper-label">Fiqa</InputLabel>
+                <Select 
+                  labelId="demo-simple-select-helper-label"
+                  id="Fiqa"
+                  value={Header.Fiqa}
+                  onChange={(e) => setHeader({ ...Header, Fiqa: e.target.value })}
+                >
+                  <MenuItem value="shia">Shia</MenuItem>
+                  <MenuItem value="sunni">Sunni</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={4} sm={12} lg={3}>
+              <TextField value={Header.Cast} id="Cast" type="text" fullWidth
+                onChange={(e) => setHeader({ ...Header, Cast: e.target.value })}
+                label="Cast"/>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <br />
+      
+      <Grid container>
+        <Grid sm={12}>
+          <Grid container spacing={4}>
+            <Grid item lg={7} sm={12}>
+              <Grid container spacing={2}>
+                <Grid item md={6} sm={12} lg={6}>
+                  <TextField value={Header.ReqName} id="ReqName" type="text" fullWidth
+                    onChange={(e) => setHeader({ ...Header, ReqName: e.target.value })}
+                    label="Requestor Name"/>
+                </Grid>
+                <Grid item md={6} sm={12}  lg={6}>
+                  <FormControl fullWidth>
+                    <InputLabel  id="demo-simple-select-helper-label">Relation With Patient</InputLabel>
+                    <Select 
+                      labelId="demo-simple-select-helper-label"
+                      id="ReqRelationWithPatient"
+                      value={Header.ReqRelationWithPatient}
+                      onChange={(e) => setHeader({ ...Header, ReqRelationWithPatient: e.target.value })}
+                    >
+                      <MenuItem value="mother">Mother</MenuItem>
+                      <MenuItem value="father">Father</MenuItem>
+                      <MenuItem value="daughter">Daughter</MenuItem>
+                      <MenuItem value="son">Son</MenuItem>
+                      <MenuItem value="self">Self</MenuItem>
 
-  return (
-    <TimePicker
-      {...rest}
-      name={name}
-      helperText={showError ? meta.error || meta.submitError : undefined}
-      error={showError}
-      inputProps={restInput}
-      onChange={onChange}
-      value={value === '' ? null : value}
-    />
-  );
-}
-
-const onSubmit = async values => {
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-  await sleep(300);
-  window.alert(JSON.stringify(values, 0, 2));
-};
-const validate = values => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = 'Required';
-  }
-  if (!values.lastName) {
-    errors.lastName = 'Required';
-  }
-  if (!values.email) {
-    errors.email = 'Required';
-  }
-  return errors;
-};
-
-export default function Welfare() {
-  return (
-    <div style={{ padding: 16, margin: 'auto', maxWidth: 600 }}>
-      <CssBaseline />
-      <Typography variant="h4" align="center" component="h1" gutterBottom>
-        🏁 Welfare
-      </Typography>
-      <Form
-        onSubmit={onSubmit}
-        initialValues={{ employed: true, stooge: 'larry' }}
-        validate={validate}
-        render={({ handleSubmit, reset, submitting, pristine, values }) => (
-          <form onSubmit={handleSubmit} noValidate>
-            <Paper style={{ padding: 16 }}>
-              <Grid container alignItems="flex-start" spacing={2}>
-                <Grid item xs={6}>
-                  <Field
-                    fullWidth
-                    required
-                    name="firstName"
-                    component={TextField}
-                    type="text"
-                    label="First Name"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Field
-                    fullWidth
-                    required
-                    name="lastName"
-                    component={TextField}
-                    type="text"
-                    label="Last Name"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    name="email"
-                    fullWidth
-                    required
-                    component={TextField}
-                    type="email"
-                    label="Email"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    label="Employed"
-                    control={
-                      <Field
-                        name="employed"
-                        component={Checkbox}
-                        type="checkbox"
-                      />
-                    }
-                  />
-                </Grid>
-                <Grid item>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Best Stooge</FormLabel>
-                    <RadioGroup row>
-                      <FormControlLabel
-                        label="Larry"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="larry"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Moe"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="moe"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Curly"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="curly"
-                          />
-                        }
-                      />
-                    </RadioGroup>
+                    </Select>
                   </FormControl>
                 </Grid>
-                <Grid item>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Sauces</FormLabel>
-                    <FormGroup row>
-                      <FormControlLabel
-                        label="Ketchup"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="ketchup"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Mustard"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="mustard"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Salsa"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="salsa"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Guacamole 🥑"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="guacamole"
-                          />
-                        }
-                      />
-                    </FormGroup>
-                  </FormControl>
+                <Grid item md={6} sm={12}  lg={6}>
+                  <TextField value={Header.ReqPhone} id="ReqPhone" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, ReqPhone: e.target.value })}
+                    label="Requestor Phone"/>
                 </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    fullWidth
-                    name="notes"
-                    component={TextField}
-                    multiline
-                    label="Notes"
-                  />
+                <Grid item md={6} sm={12}  lg={6}>
+                  <TextField value={Header.Guardian} id="Guardian" type="text" fullWidth
+                    onChange={(e) => setHeader({ ...Header, Guardian: e.target.value })}
+                    label="Guardian"/>
                 </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    fullWidth
-                    name="city"
-                    component={Select}
-                    label="Select a City"
-                    formControlProps={{ fullWidth: true }}
-                  >
-                    <MenuItem value="London">London</MenuItem>
-                    <MenuItem value="Paris">Paris</MenuItem>
-                    <MenuItem value="Budapest">
-                      A city with a very long Name
-                    </MenuItem>
-                  </Field>
+                <Grid item md={6} sm={12}  lg={6}>
+                  <TextField value={Header.MonthlyIncome} id="MonthlyIncome" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, MonthlyIncome: e.target.value })}
+                    label="Monthly Income"/>
                 </Grid>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid item xs={6}>
-                    <Field
-                      name="rendez-vous"
-                      component={DatePickerWrapper}
-                      fullWidth
-                      margin="normal"
-                      label="Rendez-vous"
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Field
-                      name="alarm"
-                      component={TimePickerWrapper}
-                      fullWidth
-                      margin="normal"
-                      label="Alarm"
-                    />
-                  </Grid>
-                </MuiPickersUtilsProvider>
-                <Grid item style={{ marginTop: 16 }}>
-                  <Button
-                    type="button"
-                    variant="contained"
-                    onClick={reset}
-                    disabled={submitting || pristine}
-                  >
-                    Reset
-                  </Button>
+                <Grid item md={6} sm={12}  lg={6}>
+                  <TextField value={Header.OtherInfo} id="OtherInfo" type="text" fullWidth
+                    onChange={(e) => setHeader({ ...Header, OtherInfo: e.target.value })}
+                    label="Other Info"/>
                 </Grid>
-                <Grid item style={{ marginTop: 16 }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={submitting}
-                  >
-                    Submit
-                  </Button>
+                <Grid item sm={12} md={12} lg={12}>
+                <FormControlLabel color="primary"
+                  control={<Checkbox checked={Header.IsMarried} name="Is Maried" fullWidth
+                  onChange={e => setHeader({ ...Header, IsMarried: !Header.IsMarried })} />}
+                  label="Maried"
+                />
+                <FormControlLabel color="primary"
+                  control={<Checkbox checked={Header.HaveGold} name="HaveGold" fullWidth
+                  onChange={e => setHeader({ ...Header, HaveGold: !Header.HaveGold })} />}
+                  label="Have Gold"
+                />
+                <FormControlLabel color="primary"
+                  control={<Checkbox checked={Header.IsEarning} name="IsEarning" fullWidth
+                  onChange={e => setHeader({ ...Header, IsEarning: !Header.IsEarning })} />}
+                  label="Is Earning"
+                />
+                <FormControlLabel color="primary"
+                  control={<Checkbox checked={Header.IsAbleToPay} name="IsAbleToPay" fullWidth
+                  onChange={e => setHeader({ ...Header, IsAbleToPay: !Header.IsAbleToPay })} />}
+                  label="Is Able To Pay"
+                />
+              </Grid>
+              </Grid>
+            </Grid>
+            <Grid item lg={1}/>
+            <Grid item lg={4} sm={12}>
+              <Grid container spacing={2}>
+                <Grid item md={6} sm={12} lg={6}>
+                  <TextField value={Header.MaleKids} id="MaleKids" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, MaleKids: e.target.value })}
+                    label="No of Kids(male)"/>
+                </Grid>
+                <Grid item md={6} sm={12}  lg={6}>
+                  <TextField value={Header.FemaleKids} id="FemaleKids" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, FemaleKids: e.target.value })}
+                    label="No of Kids(female)"/>
+                </Grid>
+                <Grid item md={6} sm={12}  lg={6}>
+                  <TextField value={Header.OtherKids} id="OtherKids" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, OtherKids: e.target.value })}
+                    label="Other Kids"/>
+                </Grid>
+                <Grid item md={6} sm={12}  lg={6}>
+                  <TextField value={Header.Brothers} id="Brothers" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, Brothers: e.target.value })}
+                    label="No of Brothers"/>
+                </Grid>
+                <Grid item md={6} sm={12}  lg={6}>
+                  <TextField value={Header.Sisters} id="Sisters" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, Sisters: e.target.value })}
+                    label="No f Sisters"/>
+                </Grid>
+                <Grid item md={6} sm={12}  lg={6}>
+                  <TextField value={Header.NoOFFamilyMembers} id="NoOFFamilyMembers" type="number" fullWidth
+                    onChange={(e) => setHeader({ ...Header, NoOFFamilyMembers: e.target.value })}
+                    label="Family Members"/>
                 </Grid>
               </Grid>
-            </Paper>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
-          </form>
-        )}
-      />
+            </Grid> 
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 }
-
