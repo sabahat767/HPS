@@ -17,6 +17,7 @@ import {
   FormControlLabel,
   
 } from '@material-ui/core';
+
 // Picker
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -72,13 +73,28 @@ const validate = values => {
 
 export default function Register() {
   const [selectedDate, setSelectedDate] = React.useState(new Date('2021-03-01T21:11:24'));
+  const [disableHelpType,setdisableHelpType]=React.useState(false)
+ 
+  
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+  const handlereligion=(val)=>{
+    if(val!="Islam"){
+      setdisableHelpType(true)
+      
+
+    }
+    else{
+      setdisableHelpType(false)
+    }
+console.log(disableHelpType)
+//console.log(e.target.value)
+  }
   return (
     <div style={{ padding: 16, margin: 'auto', width: '100%' }}>
       <CssBaseline />
-      <Typography variant="h5" align="center" component="h1" gutterBottom>
+      <Typography align="center" gutterBottom>
         🏁 Registeration
       </Typography>
       <Form
@@ -95,6 +111,7 @@ export default function Register() {
                     fullWidth
                     required
                     disabled
+                    variant="outlined"
                     name="MRno"
                     component={TextField}
                     type="text"
@@ -106,6 +123,7 @@ export default function Register() {
                     fullWidth
                     required
                     name="TokenNo"
+                    variant="outlined"
                     component={TextField}
                     type="text"
                     pattern="[0-9]*"
@@ -113,7 +131,7 @@ export default function Register() {
                   />
                 </Grid>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid item xs={6}>
+                  <Grid item xs={3}>
                   <KeyboardDatePicker
           disableToolbar
           variant="inline"
@@ -122,6 +140,7 @@ export default function Register() {
           id="date-picker-inline"
           label="Registration Date "
           value={selectedDate}
+          variant="outlined"
           onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',
@@ -138,28 +157,33 @@ export default function Register() {
                     />
                   </Grid> */}
                 </MuiPickersUtilsProvider>
-                <Grid item xs={12}>
+                <Grid item xs={3}>
                   <Field
-                    name="name"
-                    fullWidth
-                    required
-                    component={TextField}
-                    type="text"
-                    label="Name"
+                     fullWidth
+                     required
+                     name="name"
+                     variant="outlined"
+                     component={TextField}
+                     type="text"
+                    
+                     label="Name"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={3}>
+                
                   <Field
-                    name="fatherorhusband"
                     fullWidth
                     required
+                    name="fatherorhusband"
+                    variant="outlined"
                     component={TextField}
                     type="text"
+                   
                     label="Father/Husband Name"
                   />
                 </Grid>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid item xs={6}>
+                  <Grid item xs={3}>
                   <KeyboardDatePicker
           disableToolbar
           variant="inline"
@@ -181,6 +205,7 @@ export default function Register() {
                     fullWidth
                     required
                     component={TextField}
+                    variant="outlined"
                     type="text"
                     label="Age"
                   />
@@ -191,6 +216,7 @@ export default function Register() {
                     <RadioGroup row>
                       <FormControlLabel
                         label="Male"
+                        
                         control={
                           <Field
                             name="gender"
@@ -214,7 +240,7 @@ export default function Register() {
                     </RadioGroup>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={3}>
                   <Field
                     fullWidth
                     name="gender"
@@ -222,9 +248,87 @@ export default function Register() {
                     label="Gender"
                     formControlProps={{ fullWidth: true }}
                   >
-                    <MenuItem value="London">Male</MenuItem>
-                    <MenuItem value="Paris">Female</MenuItem>
+                    <MenuItem value="Male">Male</MenuItem>
+                    <MenuItem value="Female">Female</MenuItem>
                   </Field>
+                </Grid>
+                <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    name="religion"
+                    id="religion"
+                    component={Select}
+                    value={disableHelpType}
+                    label="Religion"
+                    formControlProps={{ fullWidth: true }}
+                    onClick={(e)=>handlereligion(e.target.value)}
+                  >
+                    <MenuItem value="Islam" >Islam</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                  </Field>
+                </Grid>
+                <Grid item>
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">Help Type</FormLabel>
+                    <RadioGroup row>
+                      <FormControlLabel
+                        label="Zakat"
+                        control={
+                          <Field
+                            name="helptype"
+                            component={Radio}
+                            type="radio"
+                            value="Zakat"
+                            disabled={disableHelpType}
+                          />
+                        }
+                      />
+                      <FormControlLabel
+                        label="Welfare"
+                        control={
+                          <Field
+                            name="helptype"
+                            component={Radio}
+                            type="radio"
+                            value="Welfare"
+                            
+
+                          />
+                        }
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="cnic"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                   
+                    label="CNIC"
+                  />
+                </Grid>
+                </Grid>  
+               
+       <Typography align="center" gutterBottom>
+        Contact
+      </Typography>
+      <Grid container alignItems="flex-start" spacing={2}>
+            <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="house#"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                   
+                    label="House#"
+                  />
+                </Grid>
                 </Grid>
                 {/* <Grid item xs={12}>
                   <FormControlLabel
@@ -374,7 +478,7 @@ export default function Register() {
                     Submit
                   </Button>
                 </Grid> */}
-              </Grid>
+              
             </Paper>
             <pre>{JSON.stringify(values, 0, 2)}</pre>
           </form>
