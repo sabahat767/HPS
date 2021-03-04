@@ -11,6 +11,7 @@ import Welfare from './welfare/Welfare';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import List from './list/List';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -28,25 +29,25 @@ function getSteps() {
   return ['Registeration', 'Welfare', 'Services'];
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <Register/>;
-    case 1:
-      return <Welfare/> ;
-    case 2:
-      return <Services/>;
-    default:
-      return 'Unknown step';
-  }
-}
 
 export default function HorizontalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
-
+  const getStepContent =(step) =>{
+    switch (step) {
+      case 0:
+        return <Register next={handleNext} back={handleBack}/>;
+      case 1:
+        return <Welfare next={handleNext} back={handleBack}/> ;
+      case 2:
+        return <Services next={handleNext} back={handleBack}/>;
+      default:
+        return <List/>;
+    }
+  }
+  
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -55,7 +56,7 @@ export default function HorizontalLinearStepper() {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
+  const handleNext = (Header) => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -64,6 +65,7 @@ export default function HorizontalLinearStepper() {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
+   console.log(Header,"$$$$$$$$$$$")
   };
 
   const handleBack = () => {

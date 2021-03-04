@@ -10,6 +10,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@material-ui/core';
+import GlobalHeader from '../ForwardBackHeader/GlobalHeader';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Register() {
+export default function Register({next,back}) {
   const classes = useStyles();
   const [Header, setHeader] = useState({
     MRNo: 'recID',
@@ -53,6 +54,7 @@ export default function Register() {
 
   return (
     <div style={{ padding: 16, margin: 'auto', maxWidth: '80%', justifyContent:'center' }}>
+      <GlobalHeader forward={next} back={back} title='Welfare'/>
       <Grid container spacing={2}>
         <Grid item md={4} sm={12} lg={3}>
           <TextField value={Header.MRNo} id="MRNo" fullWidth

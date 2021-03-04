@@ -10,6 +10,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@material-ui/core';
+import GlobalHeader from '../ForwardBackHeader/GlobalHeader'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -20,8 +21,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }));
-
-export default function Register() {
+export default function Register({next,back}) {
   const classes = useStyles();
   const [Header, setHeader] = useState({
     TokenNo: "",
@@ -38,7 +38,7 @@ export default function Register() {
 
   return (
     <div style={{ padding: 16, margin: 'auto', maxWidth: '80%', justifyContent:'center' }}>
-      
+       <GlobalHeader forward={next} back={back} title="Service"/>
       <Grid container>
         <Grid sm={12}>
           <Grid container spacing={4}>

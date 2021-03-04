@@ -17,7 +17,7 @@ import {
   FormControlLabel,
   
 } from '@material-ui/core';
-
+//import Checkbox from '@material-ui/core/Checkbox';
 // Picker
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -25,7 +25,7 @@ import {
   TimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-
+import GlobalHeader from '../ForwardBackHeader/GlobalHeader'
 
 function TimePickerWrapper(props) {
   const {
@@ -71,11 +71,44 @@ const validate = values => {
 };
 
 
-export default function Register() {
+export default function Register({next,back}) {
+console.log(next,".......");
+const [Header, setHeader] = React.useState({
+  MRNo: "",
+  TokenNo: "",
+  RegistrationDate: new Date(),
+  Name: "",
+  FatherOrHusband: "",
+  DOB: new Date(),
+  Age: "",
+  Gender: "",
+  Religion: "",
+  District: "",
+  City: "",
+  Area: "",
+  HousNo: "",
+  Address: "",
+  CNIC: "",
+  Phone: "",
+  OffPhone: "",
+  Mobile: "",
+  RefBy: "",
+  Remarks: "",
+  IsRejected: false,
+  IsZakat: false,
+  IsPAFEmp: false,
+  MonthlyConsLimit: 0,
+  ThumbImage: "",
+  NOY: "",
+  EmpID: "",
+  IsStaff: false,
+  CreateUser: "",
+  ModifyUser: "",
+  CreateDate: "",
+  ModifyDate: ""
+});
   const [selectedDate, setSelectedDate] = React.useState(new Date('2021-03-01T21:11:24'));
   const [disableHelpType,setdisableHelpType]=React.useState(false)
- 
-  
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -91,12 +124,14 @@ export default function Register() {
 console.log(disableHelpType)
 //console.log(e.target.value)
   }
+  const handleSubmitt=()=>{
+    next(Header);
+  }
   return (
     <div style={{ padding: 16, margin: 'auto', width: '100%' }}>
       <CssBaseline />
-      <Typography align="center" gutterBottom>
-        🏁 Registeration
-      </Typography>
+   <GlobalHeader forward={next} back={back} title="Registeration"/>
+      
       <Form
         onSubmit={onSubmit}
         initialValues={{ employed: true, stooge: 'larry' }}
@@ -112,7 +147,8 @@ console.log(disableHelpType)
                     required
                     disabled
                     variant="outlined"
-                    name="MRno"
+                    name="MRNo"
+                    value={Header.MRNo}
                     component={TextField}
                     type="text"
                     label="MR Number"
@@ -126,6 +162,8 @@ console.log(disableHelpType)
                     variant="outlined"
                     component={TextField}
                     type="text"
+                    value={Header.TokenNo}
+                    onChange={e=>setHeader({...Header,TokenNo:e.target.value})}
                     pattern="[0-9]*"
                     label="Token No"
                   />
@@ -139,9 +177,9 @@ console.log(disableHelpType)
           margin="normal"
           id="date-picker-inline"
           label="Registration Date "
-          value={selectedDate}
+          value={Header.RegistrationDate}
           variant="outlined"
-          onChange={handleDateChange}
+           onChange={(e) => setHeader({ ...Header, RegistrationDate: e.target.value })}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
@@ -161,11 +199,12 @@ console.log(disableHelpType)
                   <Field
                      fullWidth
                      required
-                     name="name"
+                     name="Name"
                      variant="outlined"
                      component={TextField}
                      type="text"
-                    
+                     value={Header.Name}
+                     onChange={(e) => setHeader({ ...Header, Name: e.target.value })}
                      label="Name"
                   />
                 </Grid>
@@ -174,11 +213,12 @@ console.log(disableHelpType)
                   <Field
                     fullWidth
                     required
-                    name="fatherorhusband"
+                    name="FatherOrHusband"
                     variant="outlined"
                     component={TextField}
                     type="text"
-                   
+                    value={Header.FatherOrHusband}
+                    onChange={(e) => setHeader({ ...Header, FatherOrHusband: e.target.value })}
                     label="Father/Husband Name"
                   />
                 </Grid>
@@ -191,8 +231,9 @@ console.log(disableHelpType)
           margin="normal"
           id="date-picker-inline"
           label="Date of Birth"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={Header.DOB}
+          // onChange={handleDateChange}
+          onChange={(e) => setHeader({ ...Header, DOB: e.target.value })}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
@@ -201,12 +242,14 @@ console.log(disableHelpType)
                   </MuiPickersUtilsProvider>
                   <Grid item xs={3}>
                   <Field
-                    name="age"
+                    name="Age"
                     fullWidth
                     required
                     component={TextField}
                     variant="outlined"
                     type="text"
+                    value={Header.Age}
+                    onChange={(e) => setHeader({ ...Header, Age: e.target.value })}
                     label="Age"
                   />
                 </Grid>
@@ -247,6 +290,9 @@ console.log(disableHelpType)
                     component={Select}
                     label="Gender"
                     formControlProps={{ fullWidth: true }}
+                    id="Gender"
+                    value={Header.Gender}
+                    onChange={(e) => setHeader({ ...Header, Gender: e.target.value })}
                   >
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
@@ -261,7 +307,10 @@ console.log(disableHelpType)
                     value={disableHelpType}
                     label="Religion"
                     formControlProps={{ fullWidth: true }}
+                    id="Religion"
+              value={Header.Religion}
                     onClick={(e)=>handlereligion(e.target.value)}
+                    onChange={ (e) => setHeader({ ...Header, Religion: e.target.value }) }
                   >
                     <MenuItem value="Islam" >Islam</MenuItem>
                     <MenuItem value="Other">Other</MenuItem>
@@ -280,6 +329,7 @@ console.log(disableHelpType)
                             type="radio"
                             value="Zakat"
                             disabled={disableHelpType}
+                            onChange={e=>setHeader({...Header,IsZakat:!Header.IsZakat})}
                           />
                         }
                       />
@@ -307,7 +357,8 @@ console.log(disableHelpType)
                     variant="outlined"
                     component={TextField}
                     type="text"
-                   
+                    value={Header.CNIC}
+                    onChange={(e) => setHeader({ ...Header, CNIC: e.target.value })}
                     label="CNIC"
                   />
                 </Grid>
@@ -325,12 +376,182 @@ console.log(disableHelpType)
                     variant="outlined"
                     component={TextField}
                     type="text"
-                   
+                    value={Header.HousNo} id="HousNo" 
+                    onChange={(e) => setHeader({ ...Header, HousNo: e.target.value })}
                     label="House#"
                   />
                 </Grid>
+                <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="Address"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                    value={Header.Address}
+                    onChange={(e) => setHeader({ ...Header, Address: e.target.value })}
+                    label="Address"
+                  />
+                </Grid> <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="Area"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                    value={Header.Area}
+                    onChange={(e) => setHeader({ ...Header, Area: e.target.value })}
+                    label="Area"
+                  />
+                </Grid> <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="District"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                    value={Header.District} id="District" 
+                    onChange={(e) => setHeader({ ...Header, District: e.target.value })}
+                    label="District"
+                  />
+                </Grid> <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="City"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                    value={Header.City} id="City" 
+                    onChange={(e) => setHeader({ ...Header, City: e.target.value })}
+                    label="City"
+                  />
+                </Grid> <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="Phone"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                    value={Header.Phone} id="Phone" 
+                    onChange={(e) => setHeader({ ...Header, Phone: e.target.value })}
+                    label="Phone"
+                  />
+                </Grid> <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="OffPhone"
+                    variant="outlined"
+                    component={TextField}
+                    type="number"
+                    value={Header.OffPhone} id="OffPhone" 
+                    onChange={(e) => setHeader({ ...Header, OffPhone: e.target.value })}
+                    label="OffPhone"
+                  />
+                </Grid> <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="Mobile"
+                    variant="outlined"
+                    component={TextField}
+                    value={Header.Mobile} id="Mobile" type="number" 
+                onChange={(e) => setHeader({ ...Header, Mobile: e.target.value })}
+                   
+                    label="Mobile"
+                  />
+                </Grid> <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="MonthlyConsLimit:"
+                    variant="outlined"
+                    component={TextField}
+                    type="number"
+                    value={Header.MonthlyConsLimit} id="MonthlyConsLimit" 
+                    onChange={(e) => setHeader({ ...Header, MonthlyConsLimit: e.target.value })}
+                    label="MonthlyConsLimit:"
+                  />
                 </Grid>
-                
+                </Grid>
+                <Typography align="center" gutterBottom>
+      Reffer Info
+      </Typography>
+      <Grid container alignItems="flex-start" spacing={2}>
+      <Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="RefBy"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                    value={Header.RefBy} id="RefBy" 
+                    onChange={(e) => setHeader({ ...Header, RefBy: e.target.value })}
+                    label="Refer By"
+                  />
+                </Grid><Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="EmpID"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                    value={Header.EmpID} id="EmpID" 
+                    onChange={(e) => setHeader({ ...Header, EmpID: e.target.value })}
+                    label="Employee ID"
+                  />
+                </Grid><Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name="NOY"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                    value={Header.NOY} id="NOY" 
+                    onChange={(e) => setHeader({ ...Header, NOY: e.target.value })}
+                    label="NOY"
+                  />
+                </Grid><Grid item xs={3}>
+                  <Field
+                    fullWidth
+                    required
+                    name=" Remarks"
+                    variant="outlined"
+                    component={TextField}
+                    type="text"
+                    value={Header.Remarks} id="Remarks" 
+                    onChange={(e) => setHeader({ ...Header, Remarks: e.target.value })}
+                    label=" Remarks"
+                  />
+                </Grid>
+        </Grid>
+        <Typography align="center" gutterBottom>
+     Staff
+      </Typography> 
+      <Grid container alignItems="flex-start" spacing={2}>
+      <Grid item xs={3}>
+    
+                {/* <Checkbox
+          checked={Header.IsPAFEmp}
+          onChange={e=>setHeader({...Header,IsPAFEmp:!Header.IsPAFEmp})}
+          value="Is PAF Emp"
+        /> */}
+        {/* <FormControlLabel color="primary"
+                  // control={
+                  // <Checkbox checked={Header.IsPAFEmp} name="Is Maried" fullWidth
+                  // onChange={e => setHeader({ ...Header, IsPAFEmp: !Header.IsPAFEmp })} />}
+                  label="IsPAFEmp"
+                /> */}
+              </Grid>
+      </Grid>
                 {/* <Grid item xs={12}>
                   <FormControlLabel
                     label="Employed"
@@ -488,4 +709,3 @@ console.log(disableHelpType)
     </div>
   );
 }
-
