@@ -65,7 +65,7 @@ export default function HorizontalLinearStepper() {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
-   console.log(Header,"$$$$$$$$$$$")
+   //console.log("i am in next")
   };
 
   const handleBack = () => {

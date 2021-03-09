@@ -124,13 +124,18 @@ const [Header, setHeader] = React.useState({
 console.log(disableHelpType)
 //console.log(e.target.value)
   }
-  const handleSubmitt=()=>{
-    next(Header);
+  const handleSubmitt=(e)=>{
+    e.preventDefault();
+    // setHeader(e.target.value)
+    console.log(Header)
+    next();
+  
   }
+  
   return (
     <div style={{ padding: 16, margin: 'auto', width: '100%' }}>
       <CssBaseline />
-   <GlobalHeader forward={next} back={back} title="Registeration"/>
+   <GlobalHeader forward={handleSubmitt} back={back} title="Registeration"/>
       
       <Form
         onSubmit={onSubmit}
@@ -138,12 +143,12 @@ console.log(disableHelpType)
         validate={validate}
         
         render={({ handleSubmit, reset, submitting, pristine, values }) => (
-          <form onSubmit={handleSubmit} noValidate >
+          // <form onSubmit={handleSubmit} noValidate >
             <Paper style={{ padding: 16 }}>
               <Grid container alignItems="flex-start" spacing={2}>
                 <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     disabled
                     variant="outlined"
@@ -156,14 +161,14 @@ console.log(disableHelpType)
                 </Grid>
                 <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="TokenNo"
                     variant="outlined"
                     component={TextField}
                     type="text"
                     value={Header.TokenNo}
-                    onChange={e=>setHeader({...Header,TokenNo:e.target.value})}
+                    onChange={(e)=>setHeader({...Header,TokenNo:e.target.value})}
                     pattern="[0-9]*"
                     label="Token No"
                   />
@@ -189,7 +194,7 @@ console.log(disableHelpType)
                     <Field
                       name="alarm"
                       component={TimePickerWrapper}
-                      fullWidth
+                      fullwidth
                       margin="normal"
                       label="Alarm"
                     />
@@ -197,21 +202,22 @@ console.log(disableHelpType)
                 </MuiPickersUtilsProvider>
                 <Grid item xs={3}>
                   <Field
-                     fullWidth
+                     fullwidth
                      required
                      name="Name"
                      variant="outlined"
                      component={TextField}
                      type="text"
                      value={Header.Name}
-                     onChange={(e) => setHeader({ ...Header, Name: e.target.value })}
+                     onChange={(e) => { console.log(e.target.value)
+                       setHeader({ ...Header, Name: e.target.value })}}
                      label="Name"
                   />
                 </Grid>
                 <Grid item xs={3}>
                 
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="FatherOrHusband"
                     variant="outlined"
@@ -243,7 +249,7 @@ console.log(disableHelpType)
                   <Grid item xs={3}>
                   <Field
                     name="Age"
-                    fullWidth
+                    fullwidth
                     required
                     component={TextField}
                     variant="outlined"
@@ -285,11 +291,11 @@ console.log(disableHelpType)
                 </Grid>
                 <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     name="gender"
                     component={Select}
                     label="Gender"
-                    formControlProps={{ fullWidth: true }}
+                    formControlProps={{ fullwidth: true }}
                     id="Gender"
                     value={Header.Gender}
                     onChange={(e) => setHeader({ ...Header, Gender: e.target.value })}
@@ -300,13 +306,13 @@ console.log(disableHelpType)
                 </Grid>
                 <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     name="religion"
                     id="religion"
                     component={Select}
                     value={disableHelpType}
                     label="Religion"
-                    formControlProps={{ fullWidth: true }}
+                    formControlProps={{ fullwidth: true }}
                     id="Religion"
               value={Header.Religion}
                     onClick={(e)=>handlereligion(e.target.value)}
@@ -351,7 +357,7 @@ console.log(disableHelpType)
                 </Grid>
                 <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="cnic"
                     variant="outlined"
@@ -370,7 +376,7 @@ console.log(disableHelpType)
       <Grid container alignItems="flex-start" spacing={2}>
             <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="house#"
                     variant="outlined"
@@ -383,7 +389,7 @@ console.log(disableHelpType)
                 </Grid>
                 <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="Address"
                     variant="outlined"
@@ -395,7 +401,7 @@ console.log(disableHelpType)
                   />
                 </Grid> <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="Area"
                     variant="outlined"
@@ -407,7 +413,7 @@ console.log(disableHelpType)
                   />
                 </Grid> <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="District"
                     variant="outlined"
@@ -419,7 +425,7 @@ console.log(disableHelpType)
                   />
                 </Grid> <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="City"
                     variant="outlined"
@@ -431,7 +437,7 @@ console.log(disableHelpType)
                   />
                 </Grid> <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="Phone"
                     variant="outlined"
@@ -443,7 +449,7 @@ console.log(disableHelpType)
                   />
                 </Grid> <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="OffPhone"
                     variant="outlined"
@@ -455,7 +461,7 @@ console.log(disableHelpType)
                   />
                 </Grid> <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="Mobile"
                     variant="outlined"
@@ -467,7 +473,7 @@ console.log(disableHelpType)
                   />
                 </Grid> <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="MonthlyConsLimit:"
                     variant="outlined"
@@ -485,7 +491,7 @@ console.log(disableHelpType)
       <Grid container alignItems="flex-start" spacing={2}>
       <Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="RefBy"
                     variant="outlined"
@@ -497,7 +503,7 @@ console.log(disableHelpType)
                   />
                 </Grid><Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="EmpID"
                     variant="outlined"
@@ -509,7 +515,7 @@ console.log(disableHelpType)
                   />
                 </Grid><Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name="NOY"
                     variant="outlined"
@@ -521,7 +527,7 @@ console.log(disableHelpType)
                   />
                 </Grid><Grid item xs={3}>
                   <Field
-                    fullWidth
+                    fullwidth
                     required
                     name=" Remarks"
                     variant="outlined"
@@ -546,7 +552,7 @@ console.log(disableHelpType)
         /> */}
         {/* <FormControlLabel color="primary"
                   // control={
-                  // <Checkbox checked={Header.IsPAFEmp} name="Is Maried" fullWidth
+                  // <Checkbox checked={Header.IsPAFEmp} name="Is Maried" fullwidth
                   // onChange={e => setHeader({ ...Header, IsPAFEmp: !Header.IsPAFEmp })} />}
                   label="IsPAFEmp"
                 /> */}
@@ -657,7 +663,7 @@ console.log(disableHelpType)
                 </Grid>
                 <Grid item xs={12}>
                   <Field
-                    fullWidth
+                    fullwidth
                     name="notes"
                     component={TextField}
                     multiline
@@ -666,11 +672,11 @@ console.log(disableHelpType)
                 </Grid>
                 <Grid item xs={12}>
                   <Field
-                    fullWidth
+                    fullwidth
                     name="city"
                     component={Select}
                     label="Select a City"
-                    formControlProps={{ fullWidth: true }}
+                    formControlProps={{ fullwidth: true }}
                   >
                     <MenuItem value="London">London</MenuItem>
                     <MenuItem value="Paris">Paris</MenuItem>
@@ -702,8 +708,8 @@ console.log(disableHelpType)
                 </Grid> */}
               
             </Paper>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
-          </form>
+            // <pre>{JSON.stringify(values, 0, 2)}</pre>
+          // </form> 
         )}
       />
     </div>

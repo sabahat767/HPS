@@ -11,7 +11,7 @@ import {
   FormControlLabel,
 } from '@material-ui/core';
 import GlobalHeader from '../ForwardBackHeader/GlobalHeader';
-
+import MaterialTable from 'material-table'
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -24,6 +24,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register({next,back}) {
   const classes = useStyles();
+  const { useState } = React;
+  const [columns, setColumns] = useState([
+    { title: 'Member Name', field: 'MemberName' },
+    { title: 'Relation With Parents', field: 'RelationWithParents', initialEditValue: 'initial edit value' },
+    { title: 'Monthly Income', field: 'MonthlyIncome', type: 'numeric' },
+    
+  ]);
+
+  const [data, setData] = useState([
+    { MemberName: 'Mehmet', RelationWithParents: 'Baran', MonthlyIncome: 1987},
+   
+  ]);
+
   const [Header, setHeader] = useState({
     MRNo: 'recID',
     TokenNo: "",
@@ -242,6 +255,45 @@ export default function Register({next,back}) {
                 </Grid>
               </Grid>
             </Grid> 
+          </Grid>
+          <Grid item lg={12} sm={12}>
+          <MaterialTable
+      title="Details"
+      columns={columns}
+      data={data}
+      editable={{
+        onRowAdd: newData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              setData([...data, newData]);
+              
+              resolve();
+            }, 1000)
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataUpdate = [...data];
+              const index = oldData.tableData.id;
+              dataUpdate[index] = newData;
+              setData([...dataUpdate]);
+
+              resolve();
+            }, 1000)
+          }),
+        onRowDelete: oldData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataDelete = [...data];
+              const index = oldData.tableData.id;
+              dataDelete.splice(index, 1);
+              setData([...dataDelete]);
+              
+              resolve()
+            }, 1000)
+          }),
+      }}
+    />
           </Grid>
         </Grid>
       </Grid>

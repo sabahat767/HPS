@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Form, Field } from 'react-final-form';
+import MaterialTable from 'material-table'
+
 import {
   TextField,
   InputLabel,
@@ -7,7 +10,7 @@ import {
   MenuItem,
   Select,
   FormControl,
-  Checkbox,
+ Button,
   FormControlLabel,
 } from '@material-ui/core';
 import GlobalHeader from '../ForwardBackHeader/GlobalHeader'
@@ -23,6 +26,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Register({next,back}) {
   const classes = useStyles();
+  const { useState } = React;
+  const [columns, setColumns] = useState([
+    { title: 'Test Code', field: 'TestCode' },
+    { title: 'Test Description', field: 'TestDescription', initialEditValue: 'initial edit value' },
+    { title: 'Test Date', field: 'TestDate', type: 'date' },
+    
+  ]);
+
+  const [data, setData] = useState([
+    { TestCode: 'Mehmet', TestDescription: 'Baran', TestDate:'2021-03-09'},
+   
+  ]);
   const [Header, setHeader] = useState({
     TokenNo: "",
     ServiceDate: new Date(),
@@ -35,10 +50,23 @@ export default function Register({next,back}) {
     CreatedUser: "Admin",
     ModifyUser: "Admin"
 });
-
+const handleSubmitt=(e)=>{
+  e.preventDefault();
+  // setHeader(e.target.value)
+  console.log(Header)
+  next();
+}
   return (
     <div style={{ padding: 16, margin: 'auto', maxWidth: '80%', justifyContent:'center' }}>
-       <GlobalHeader forward={next} back={back} title="Service"/>
+       {/* <GlobalHeader forward={next} back={back} title="Service"/> */}
+       <GlobalHeader  back={back} title="Service"/>
+       <Form
+        onSubmit={handleSubmitt}
+        initialValues={{ employed: true, stooge: 'larry' }}
+        // validate={validate}
+        
+        render={({ handleSubmit, reset, submitting, pristine, values }) => (
+          <form  noValidate >
       <Grid container>
         <Grid sm={12}>
           <Grid container spacing={4}>
@@ -121,11 +149,62 @@ export default function Register({next,back}) {
                     // onChange={(e) => setHeader({ ...Header, MaleKids: e.target.value })}
                     label="Token No" disabled={true}/>
                 </Grid>
+                <Grid item style={{ marginTop: 16 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={submitting}
+                  >
+                    Submit
+                  </Button>
+                </Grid> 
               </Grid>
             </Grid> 
           </Grid>
+          <Grid item lg={6} sm={6}>
+          <MaterialTable
+      title="Service Info"
+      columns={columns}
+      data={data}
+      editable={{
+        onRowAdd: newData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              setData([...data, newData]);
+              
+              resolve();
+            }, 1000)
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataUpdate = [...data];
+              const index = oldData.tableData.id;
+              dataUpdate[index] = newData;
+              setData([...dataUpdate]);
+
+              resolve();
+            }, 1000)
+          }),
+        onRowDelete: oldData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataDelete = [...data];
+              const index = oldData.tableData.id;
+              dataDelete.splice(index, 1);
+              setData([...dataDelete]);
+              
+              resolve()
+            }, 1000)
+          }),
+      }}
+    />
+          </Grid>
         </Grid>
       </Grid>
+        </form>
+        )}/>
     </div>
   );
 }
