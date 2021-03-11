@@ -123,9 +123,13 @@ console.log(disableHelpType)
   };
   const handleSubmitt=(e)=>{
     e.preventDefault();
+    const val = validate()
+    if (val=='true'){
+      next();
+    }
     // setHeader(e.target.value)
     console.log(Header)
-    next();
+    
   
   }
   
@@ -133,15 +137,7 @@ console.log(disableHelpType)
     <div style={{ padding: 16, margin: 'auto', width: '100%' }}>
       <CssBaseline />
    <GlobalHeader forward={handleSubmitt} back={back} title="Registeration"/>
-      
-      <Form
-        onSubmit={onSubmit}
-        initialValues={{ employed: true, stooge: 'larry' }}
-        validate={validate}
-       
-        render={({ handleSubmit, reset, submitting, pristine, values }) => (
-          // <form onSubmit={handleSubmit} noValidate >
-            <Paper style={{ padding: 16 }}  style={{backgroundColor:'#EEE8AA'}}>
+   <Paper style={{ padding: 16 }}  style={{backgroundColor:'#EEE8AA'}}>
               <Grid container alignItems="flex-start" spacing={2} >
                 <Grid item xs={3}>
                   <Field
@@ -541,174 +537,9 @@ console.log(disableHelpType)
       </Typography> 
       <Grid container alignItems="flex-start" spacing={2}>
       <Grid item xs={3}>
-    
-                {/* <Checkbox
-          checked={Header.IsPAFEmp}
-          onChange={e=>setHeader({...Header,IsPAFEmp:!Header.IsPAFEmp})}
-          value="Is PAF Emp"
-        /> */}
-        {/* <FormControlLabel color="primary"
-                  // control={
-                  // <Checkbox checked={Header.IsPAFEmp} name="Is Maried" fullwidth
-                  // onChange={e => setHeader({ ...Header, IsPAFEmp: !Header.IsPAFEmp })} />}
-                  label="IsPAFEmp"
-                /> */}
-              </Grid>
-      </Grid>
-                {/* <Grid item xs={12}>
-                  <FormControlLabel
-                    label="Employed"
-                    control={
-                      <Field
-                        name="employed"
-                        component={Checkbox}
-                        type="checkbox"
-                      />
-                    }
-                  />
-                </Grid>
-                <Grid item>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Best Stooge</FormLabel>
-                    <RadioGroup row>
-                      <FormControlLabel
-                        label="Larry"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="larry"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Moe"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="moe"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Curly"
-                        control={
-                          <Field
-                            name="stooge"
-                            component={Radio}
-                            type="radio"
-                            value="curly"
-                          />
-                        }
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                </Grid>
-                <Grid item>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Sauces</FormLabel>
-                    <FormGroup row>
-                      <FormControlLabel
-                        label="Ketchup"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="ketchup"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Mustard"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="mustard"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Salsa"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="salsa"
-                          />
-                        }
-                      />
-                      <FormControlLabel
-                        label="Guacamole 🥑"
-                        control={
-                          <Field
-                            name="sauces"
-                            component={Checkbox}
-                            type="checkbox"
-                            value="guacamole"
-                          />
-                        }
-                      />
-                    </FormGroup>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    fullwidth
-                    name="notes"
-                    component={TextField}
-                    multiline
-                    label="Notes"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    fullwidth
-                    name="city"
-                    component={Select}
-                    label="Select a City"
-                    formControlProps={{ fullwidth: true }}
-                  >
-                    <MenuItem value="London">London</MenuItem>
-                    <MenuItem value="Paris">Paris</MenuItem>
-                    <MenuItem value="Budapest">
-                      A city with a very long Name
-                    </MenuItem>
-                  </Field>
-                </Grid>
-              
-                <Grid item style={{ marginTop: 16 }}>
-                  <Button
-                    type="button"
-                    variant="contained"
-                    onClick={reset}
-                    disabled={submitting || pristine}
-                  >
-                    Reset
-                  </Button>
-                </Grid>
-                <Grid item style={{ marginTop: 16 }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={submitting}
-                  >
-                    Submit
-                  </Button>
-                </Grid> */}
-              
+    <Grid/>
+              <Grid/>
             </Paper>
-            // <pre>{JSON.stringify(values, 0, 2)}</pre>
-          // </form> 
-        )}
-      />
     </div>
   );
 }
