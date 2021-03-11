@@ -55,20 +55,7 @@ const onSubmit = async values => {
   await sleep(300);
   window.alert(JSON.stringify(values, 0, 2));
 };
-const validate = values => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = 'Required';
-  }
-  // if (!values.TokenNo && values.TokenNo!="[0-9]*") {
-    if (!values.TokenNo){
-    errors.TokenNo = 'Required';
-  }
-  if (!values.email) {
-    errors.email = 'Required';
-  }
-  return errors;
-};
+
 
 
 export default function Register({next,back}) {
@@ -124,6 +111,16 @@ const [Header, setHeader] = React.useState({
 console.log(disableHelpType)
 //console.log(e.target.value)
   }
+  const validate = values => {
+    const errors = {};
+    if (!values.TokenNo) {
+      errors.TokenNo = 'Required';
+    }
+   if(!values.Name){
+     errors.Name = "Requird";
+   }
+    return errors;
+  };
   const handleSubmitt=(e)=>{
     e.preventDefault();
     // setHeader(e.target.value)
@@ -141,11 +138,11 @@ console.log(disableHelpType)
         onSubmit={onSubmit}
         initialValues={{ employed: true, stooge: 'larry' }}
         validate={validate}
-        
+       
         render={({ handleSubmit, reset, submitting, pristine, values }) => (
           // <form onSubmit={handleSubmit} noValidate >
-            <Paper style={{ padding: 16 }}>
-              <Grid container alignItems="flex-start" spacing={2}>
+            <Paper style={{ padding: 16 }}  style={{backgroundColor:'#EEE8AA'}}>
+              <Grid container alignItems="flex-start" spacing={2} >
                 <Grid item xs={3}>
                   <Field
                     fullwidth

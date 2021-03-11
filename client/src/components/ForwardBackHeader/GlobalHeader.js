@@ -10,6 +10,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+    
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit',
+    
   },
 }));
 
@@ -30,7 +32,8 @@ export default function GlobalHeader({forward, back, title}) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+     
+      <AppBar position="static" style={{ backgroundColor:'#228B22'}}>
         <Toolbar>
         <IconButton
               edge="end"

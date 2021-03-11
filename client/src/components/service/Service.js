@@ -69,7 +69,7 @@ const handleSubmitt=(e)=>{
           <form  noValidate >
       <Grid container>
         <Grid sm={12}>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} >
             <Grid item lg={7} sm={12}>
               <Grid container spacing={2}>
                 <Grid item md={4} sm={12} lg={3}>
@@ -149,16 +149,7 @@ const handleSubmitt=(e)=>{
                     // onChange={(e) => setHeader({ ...Header, MaleKids: e.target.value })}
                     label="Token No" disabled={true}/>
                 </Grid>
-                <Grid item style={{ marginTop: 16 }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={submitting}
-                  >
-                    Submit
-                  </Button>
-                </Grid> 
+               
               </Grid>
             </Grid> 
           </Grid>
@@ -202,6 +193,16 @@ const handleSubmitt=(e)=>{
     />
           </Grid>
         </Grid>
+        <Grid item style={{ marginTop: 16 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={submitting}
+                  >
+                    Submit
+                  </Button>
+                </Grid> 
       </Grid>
         </form>
         )}/>

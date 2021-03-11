@@ -66,9 +66,10 @@ export default function Register({next,back}) {
 });
 
   return (
-    <div style={{ padding: 16, margin: 'auto', maxWidth: '80%', justifyContent:'center' }}>
+    <div style={{ padding: 16, margin: 'auto', maxWidth: '80%', justifyContent:'center', }}>
       <GlobalHeader forward={next} back={back} title='Welfare'/>
-      <Grid container spacing={2}>
+      <Grid style={{backgroundColor:'#EEE8AA'}}>
+      <Grid container spacing={2} >
         <Grid item md={4} sm={12} lg={3}>
           <TextField value={Header.MRNo} id="MRNo" fullWidth
             type="text" disabled={true}
@@ -101,7 +102,7 @@ export default function Register({next,back}) {
         </Grid>
       </Grid>
 
-      <Grid container>
+      <Grid container >
         <Grid sm={12}>
           <Grid container spacing={2}>
             <Grid item md={4} sm={12} lg={3}>
@@ -296,6 +297,7 @@ export default function Register({next,back}) {
     />
           </Grid>
         </Grid>
+      </Grid>
       </Grid>
     </div>
   );

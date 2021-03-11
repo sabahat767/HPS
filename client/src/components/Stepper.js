@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
+
   },
 }));
 
@@ -93,13 +94,14 @@ export default function HorizontalLinearStepper() {
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={activeStep} >
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
           
           return (
-            <Step key={label} {...stepProps}>
+    
+    <Step key={label} {...stepProps} >
               <StepLabel {...labelProps}>{label}</StepLabel>
             </Step>
           );
@@ -117,9 +119,9 @@ export default function HorizontalLinearStepper() {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <Typography className={classes.instructions} >{getStepContent(activeStep)}</Typography>
             <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+              {/* <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                <ArrowBackIosIcon/>
               </Button>
              
@@ -132,7 +134,7 @@ export default function HorizontalLinearStepper() {
                 className={classes.button}
               >
                 {activeStep === steps.length - 1 ? <CheckCircleOutlineIcon/> : <ArrowForwardIosIcon/>}
-              </Button>
+              </Button> */}
             </div>
           </div>
         )}
